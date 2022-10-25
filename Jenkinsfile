@@ -22,7 +22,7 @@ node {
                 script {      
               try {
          
-                    sh './shiftleft image-scan -t 180 -i myapp.tar'
+                    sh 'shiftleft image-scan -t 180 -i myapp.tar'
                    } catch (Exception e) {
     
                  echo "Request for Approval"  
