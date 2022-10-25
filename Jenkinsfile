@@ -18,7 +18,7 @@ node {
     
      stage('ShiftLeft Container Image Scan') {    
            
-            steps {
+         #   steps {
                 script {      
               try {
          
@@ -29,7 +29,7 @@ node {
                   }
                 }  
              }
-          }
+         # }
 
     stage('Test image') {
   
