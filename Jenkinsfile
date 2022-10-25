@@ -13,7 +13,7 @@ node {
     stage('Build image') {
   
        app = docker.build("strbac17/gitsecops_test")
-       sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar
+       sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
     }
     
      stage('ShiftLeft Container Image Scan') {    
