@@ -1,5 +1,13 @@
-node {
-    def app
+pipeline {
+    agent {
+        // Define agent details here
+    }
+    environment {
+           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
+           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
+        }
+    stages {
+
     stage('Clone repository') {
       
 
@@ -13,10 +21,7 @@ node {
     }
     
      stage('ShiftLeft Container Image Scan') {    
-     environment {
-           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
-        }
+
                 script {      
               try {
          
@@ -47,4 +52,5 @@ node {
                 echo "triggering updatemanifestjob"
                 build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
         }
+    }
 }
