@@ -1,13 +1,10 @@
-pipeline {
-    agent {
-        // Define agent details here
-    }
-    environment {
+node 
+         environment {
            CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
            CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
         }
-    stages {
-
+{
+    def app
     stage('Clone repository') {
       
 
@@ -52,5 +49,4 @@ pipeline {
                 echo "triggering updatemanifestjob"
                 build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
         }
-    }
 }
