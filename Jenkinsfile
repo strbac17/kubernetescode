@@ -1,10 +1,10 @@
 node 
-         environment {
-           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
-        }
 {
     def app
+    environment {
+        CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
+        CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
+        }
     stage('Clone repository') {
       
 
