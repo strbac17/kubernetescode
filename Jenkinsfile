@@ -1,9 +1,5 @@
 node {
     def app
-    environment {
-           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
-        }
     stage('Clone repository') {
       
 
@@ -17,7 +13,10 @@ node {
     }
     
      stage('ShiftLeft Container Image Scan') {    
-           
+     environment {
+           CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
+           CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
+        }
                 script {      
               try {
          
