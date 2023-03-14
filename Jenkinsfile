@@ -1,10 +1,9 @@
 node 
 {
     def app
-    environment {
-        CHKP_CLOUDGUARD_ID = credentials("CHKP_CLOUDGUARD_ID")
-        CHKP_CLOUDGUARD_SECRET = credentials("CHKP_CLOUDGUARD_SECRET")
-        }
+  environment {
+    SPECTRAL_DSN = credentials('spectral-dsn')
+      
     stage('Clone repository') {
       
 
@@ -17,18 +16,16 @@ node
        sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
     }
     
-     stage('ShiftLeft Container Image Scan') {    
-
-                script {      
-              try {
-         
-                    sh 'shiftleft image-scan -t 180 -i myapp.tar'
-                   } catch (Exception e) {
+    stage('install Spectral') {
+      steps {
+        sh "curl -L 'https://spectral-eu.checkpoint.com/latest/x/sh?dsn=$SPECTRAL_DSN' | sh"
+      }
     
-                 echo "Request for Approval"  
-                  }
-                }  
-             }
+    stage('scan for issues') {
+      steps {
+        sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
+      }
+    }
 
     stage('Test image') {
   
