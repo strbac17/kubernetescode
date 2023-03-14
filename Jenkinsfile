@@ -5,8 +5,6 @@ node
     SPECTRAL_DSN = credentials('spectral-dsn')
   } 
     stage('Clone repository') {
-      
-
         checkout scm
     }
 
@@ -17,18 +15,16 @@ node
     }
     
     stage('install Spectral') {
-//     steps {
         sh "curl -L 'https://spectral-eu.checkpoint.com/latest/x/sh?dsn=$SPECTRAL_DSN' | sh"
       }
-//    }
+
     stage('scan for issues') {
-//      steps {
+
         sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
-//      }
+
     }
 
     stage('Test image') {
-  
 
         app.inside {
             sh 'echo "Tests passed"'
