@@ -1,9 +1,9 @@
 node 
 {
     def app
-  environment {
+    environment {
     SPECTRAL_DSN = credentials("spectral-dsn")
-  } 
+    } 
     stage('Clone repository') {
         checkout scm
     }
