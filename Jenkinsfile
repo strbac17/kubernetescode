@@ -17,14 +17,14 @@ node
     }
     
     stage('install Spectral') {
-      steps {
+ #     steps {
         sh "curl -L 'https://spectral-eu.checkpoint.com/latest/x/sh?dsn=$SPECTRAL_DSN' | sh"
       }
-    }
+#    }
     stage('scan for issues') {
-      steps {
+#      steps {
         sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
-      }
+#      }
     }
 
     stage('Test image') {
