@@ -12,7 +12,7 @@ pipeline {
     
     stage('Build image') {
       steps {
-       app = docker.build("strbac17/gitsecops_test")
+       docker.build("strbac17/gitsecops_test")
        sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
       }
     }
