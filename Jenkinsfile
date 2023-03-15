@@ -5,12 +5,16 @@ pipeline {
   }
   stages {
     stage('Clone repository') {
-    checkout scm
+      steps {
+        checkout scm
+      }
     }
     
     stage('Build image') {
+      steps {
        app = docker.build("strbac17/gitsecops_test")
        sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
+      }
     }
 
     stage('Install Spectral') {
@@ -24,23 +28,26 @@ pipeline {
       }
     }
     stage('Test image') {
-
+  steps {
         app.inside {
             sh 'echo "Tests passed"'
         }
+      }        
     }
         
     stage('Push image') {
-        
+  steps {        
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
         }
+      }          
     }
 
     stage('Trigger ManifestUpdate') {
+  steps {        
                 echo "triggering updatemanifestjob"
                 build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-    }
-
+      }
+    } 
   }
 }
