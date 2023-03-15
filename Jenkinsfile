@@ -24,23 +24,29 @@ pipeline {
         sh "curl -L 'https://spectral-eu.checkpoint.com/latest/x/sh?dsn=$SPECTRAL_DSN' | sh"
       }
     }
+
     stage('Scan for issues') {
       steps {
         sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
       }
     }
+
     stage('Test image') {
   steps {
+        script {
         app.inside {
             sh 'echo "Tests passed"'
+        }
         }
       }        
     }
         
     stage('Push image') {
-  steps {        
+  steps {
+        script {        
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
+        }
         }
       }          
     }
