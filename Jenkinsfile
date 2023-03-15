@@ -45,7 +45,7 @@ pipeline {
   steps {
         script {        
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-        docker.push("${env.BUILD_NUMBER}")
+        docker.push()//"${env.BUILD_NUMBER}")
         }
         }
       }          
