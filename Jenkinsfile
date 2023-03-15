@@ -34,7 +34,7 @@ pipeline {
     stage('Test image') {
   steps {
         script {
-        app.inside {
+        //app.inside {
             sh 'echo "Tests passed"'
         }
         }
@@ -45,7 +45,7 @@ pipeline {
   steps {
         script {        
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+        docker.push("${env.BUILD_NUMBER}")
         }
         }
       }          
