@@ -5,7 +5,7 @@ pipeline {
   }
   stages {
     stage('Clone repository') {
-        checkout scm
+    checkout scm
     }
     
     stage('Build image') {
