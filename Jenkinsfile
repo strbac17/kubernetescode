@@ -46,7 +46,7 @@ pipeline {
             script {
                 docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                 def customImage = docker.build("strbac17/gitsecops_test")
-                docker.push("${env.BUILD_NUMBER}")
+                docker.push()//"${env.BUILD_NUMBER}")
                 }
          }
         }
