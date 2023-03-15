@@ -10,14 +10,14 @@ pipeline {
       }
     }
     
-    stage('Build image') {
-      steps {
-        script {
-            docker.build("strbac17/gitsecops_test")
-            sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
-        }
-      }
-    }
+    //stage('Build image') {
+    //  steps {
+    //    script {
+    //        docker.build("strbac17/gitsecops_test")
+    //        sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
+    //    }
+    //  }
+    //}
 
     stage('Install Spectral') {
       steps {
@@ -32,7 +32,7 @@ pipeline {
     }
 
     stage('Test image') {
-  steps {
+        steps {
         script {
         //app.inside {
             sh 'echo "Tests passed"'
@@ -42,14 +42,16 @@ pipeline {
     }
         
     stage('Push image') {
-  steps {
-        script {        
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-        docker.push()//"${env.BUILD_NUMBER}")
-        }
+        steps {
+            script {
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+                def customImage = docker.build("strbac17/gitsecops_test")
+                docker.push("${env.BUILD_NUMBER}")
+         }
         }
       }          
     }
+
 
 //    stage('Trigger ManifestUpdate') {
 //  steps {        
@@ -57,5 +59,5 @@ pipeline {
 //        build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
 //      }
 //    } 
- }
+// }
 }
