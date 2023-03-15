@@ -9,15 +9,6 @@ pipeline {
         checkout scm
       }
     }
-    
-    //stage('Build image') {
-    //  steps {
-    //    script {
-    //        docker.build("strbac17/gitsecops_test")
-    //        sh 'docker save registry.hub.docker.com/strbac17/gitsecops_test -o myapp.tar'
-    //    }
-    //  }
-    //}
 
     stage('Install Spectral') {
       steps {
@@ -25,7 +16,7 @@ pipeline {
       }
     }
 
-    stage('Scan for issues') {
+    stage('Spectral security scan') {
       steps {
         sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
       }
@@ -34,14 +25,12 @@ pipeline {
     stage('Test image') {
         steps {
         script {
-        //app.inside {
             sh 'echo "Tests passed"'
-        //}
         }
       }        
     }
         
-    stage('Push image') {
+    stage('Push image to DockerHub') {
         steps {
             script {
                 docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
@@ -52,9 +41,9 @@ pipeline {
         }
     }          
     
-    stage('Trigger ManifestUpdate') {
+    stage('Trigger K8S manifest file update') {
         steps {        
-            echo "triggering updatemanifestjob"
+            echo "triggering update manifest job"
             build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
       }
     }
