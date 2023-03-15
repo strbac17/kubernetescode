@@ -36,7 +36,7 @@ pipeline {
         script {
         //app.inside {
             sh 'echo "Tests passed"'
-        }
+        //}
         }
       }        
     }
