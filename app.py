@@ -4,4 +4,4 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return "Secure GitOps with CheckPoint 83 \n"
+    return "Secure GitOps with CheckPoint v83 \n"
