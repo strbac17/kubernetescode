@@ -18,7 +18,7 @@ pipeline {
 
     stage('Spectral security scan') {
       steps {
-        sh "$HOME/.spectral/spectral scan --ok  --include-tags base,audit"
+        sh "$HOME/.spectral/spectral scan --ok --engines secrets,oss --include-tags base,audit"
       }
     }
 
